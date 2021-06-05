@@ -86,6 +86,9 @@ def check_win(player):
 
     return False
 
+def check_draw():
+    if is_board_full() and not check_win(1) and not check_win(2):
+        return True
 
 def draw_vertical_win(col, player):
     posX = col * 200 + 100
@@ -106,7 +109,7 @@ def draw_horizontal_win(row, player):
     elif player == 2:
         color = WHITE
 
-    pygame.draw.line(screen, color, (15, posY), (WIDTH - 15, posY))
+    pygame.draw.line(screen, color, (15, posY), (WIDTH - 15, posY), 15)
 
 
 def draw_diagonal_win_A(player):
@@ -159,10 +162,14 @@ while True:
                     mark_square(clicked_row, clicked_col, 1)
                     if check_win(player):
                         game_over = True
+                    if check_draw():
+                        game_over = True
                     player = 2
                 elif player == 2:
                     mark_square(clicked_row, clicked_col, 2)
                     if check_win(player):
+                        game_over = True
+                    if check_draw():
                         game_over = True
                     player = 1
 
